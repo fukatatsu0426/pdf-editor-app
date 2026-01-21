@@ -1,0 +1,35 @@
+# 依存関係
+node_modules/
+package-lock.json
+
+# ビルド出力
+dist/
+release/
+
+# ログ
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 環境変数
+.env
+.env.local
+
+# Electron
+out/
+*.exe
+*.dmg
+*.AppImage
+
+# 一時ファイル
+*.tmp
+*.temp

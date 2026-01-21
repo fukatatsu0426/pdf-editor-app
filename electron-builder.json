@@ -1,0 +1,48 @@
+{
+  "appId": "com.company.pdf-editor",
+  "productName": "PDF編集ツール",
+  "directories": {
+    "output": "release",
+    "buildResources": "build"
+  },
+  "files": [
+    "dist/**/*",
+    "node_modules/**/*",
+    "package.json"
+  ],
+  "extraMetadata": {
+    "main": "dist/electron/main.js"
+  },
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64"]
+      }
+    ],
+    "icon": "build/icon.ico",
+    "artifactName": "${productName}-${version}-Setup.${ext}"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "PDF編集ツール",
+    "installerIcon": "build/icon.ico",
+    "uninstallerIcon": "build/icon.ico",
+    "installerHeaderIcon": "build/icon.ico",
+    "installerLanguages": ["ja_JP"],
+    "license": "LICENSE.txt"
+  },
+  "mac": {
+    "target": ["dmg"],
+    "icon": "build/icon.icns",
+    "category": "public.app-category.productivity"
+  },
+  "linux": {
+    "target": ["AppImage"],
+    "icon": "build/icon.png",
+    "category": "Office"
+  }
+}
