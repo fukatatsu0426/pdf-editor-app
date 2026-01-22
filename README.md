@@ -72,9 +72,28 @@ electron-builder --mac
 
 ## インストーラーの配布
 
+### 開発者向け（ビルド担当者）
+
+**詳細:** [WINDOWS_BUILD_GUIDE.md](WINDOWS_BUILD_GUIDE.md)
+
 1. `release/` フォルダから `.exe` ファイルを取得
-2. 社内の共有フォルダやメールで配布
-3. ユーザーは `.exe` を実行してインストール
+2. SharePointまたは社内共有フォルダにアップロード
+
+### エンドユーザー向け（社員）
+
+**詳細:** [USER_INSTALL_GUIDE.md](USER_INSTALL_GUIDE.md)
+
+1. SharePointから `.exe` ファイルをダウンロード
+2. ダブルクリックしてインストール
+3. **Node.js、Git等は不要です**
+
+### SharePoint配布方法
+
+**詳細:** [SHAREPOINT_DISTRIBUTION_GUIDE.md](SHAREPOINT_DISTRIBUTION_GUIDE.md)
+
+- ドキュメントライブラリへのアップロード方法
+- 権限設定とリンク共有
+- バージョン管理方法
 
 ## プロジェクト構造
 
