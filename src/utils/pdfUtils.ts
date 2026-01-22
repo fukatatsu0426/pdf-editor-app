@@ -18,7 +18,6 @@ export async function loadPDF(data: ArrayBuffer) {
 export function canvasToPDFCoordinates(
   canvasX: number,
   canvasY: number,
-  canvasHeight: number,
   pdfPageHeight: number,
   scale: number
 ): { x: number; y: number } {

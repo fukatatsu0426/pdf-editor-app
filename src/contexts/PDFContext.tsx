@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode } from 'react';
 import { PDFState, PDFContextType } from '../types/pdf.types';
 import { loadPDF } from '../utils/pdfUtils';
 

@@ -12,7 +12,7 @@ interface SplitRange {
 
 export default function FileSplitter() {
   const [pdfFile, setPdfFile] = useState<{ path: string; name: string } | null>(null);
-  const [pdfDocument, setPdfDocument] = useState<PDFDocumentProxy | null>(null);
+  const [, setPdfDocument] = useState<PDFDocumentProxy | null>(null);
   const [totalPages, setTotalPages] = useState(0);
   const [splitRanges, setSplitRanges] = useState<SplitRange[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
