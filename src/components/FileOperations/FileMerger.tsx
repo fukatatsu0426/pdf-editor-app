@@ -16,7 +16,7 @@ export default function FileMerger() {
   const handleAddFiles = async () => {
     try {
       const filePaths = await window.electronAPI.openMultipleFilesDialog();
-      if (filePaths.length === 0) return;
+      if (!filePaths || filePaths.length === 0) return;
 
       const newFiles: FileItem[] = filePaths.map((path) => ({
         id: Math.random().toString(36).substring(7),
