@@ -217,14 +217,18 @@ export async function addUnderline(
       const rightX = baseX - perpX * half;
       const rightY = baseY - perpY * half;
 
-      page.drawPolygon(
-        [
-          { x: px, y: py },
-          { x: leftX, y: leftY },
-          { x: rightX, y: rightY },
-        ],
-        { color: rgb(color.r, color.g, color.b) }
-      );
+      page.drawLine({
+        start: { x: px, y: py },
+        end: { x: leftX, y: leftY },
+        thickness: underline.thickness,
+        color: rgb(color.r, color.g, color.b),
+      });
+      page.drawLine({
+        start: { x: px, y: py },
+        end: { x: rightX, y: rightY },
+        thickness: underline.thickness,
+        color: rgb(color.r, color.g, color.b),
+      });
     };
 
     if (arrowEnd) {

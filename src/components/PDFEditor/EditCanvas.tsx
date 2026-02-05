@@ -36,7 +36,7 @@ const EditCanvas: React.FC = () => {
   const [drawStart, setDrawStart] = useState<{ x: number; y: number } | null>(null);
   const [drawCurrent, setDrawCurrent] = useState<{ x: number; y: number } | null>(null);
   const [editingTextId, setEditingTextId] = useState<string | null>(null);
-  const [isRendering, setIsRendering] = useState(false);
+  // const [isRendering, setIsRendering] = useState(false);
   const [renderError, setRenderError] = useState<string | null>(null);
   const [commentDraft, setCommentDraft] = useState<{ x: number; y: number; text: string } | null>(null);
   const [dragging, setDragging] = useState<{
@@ -74,7 +74,7 @@ const EditCanvas: React.FC = () => {
   useEffect(() => {
     if (!pdfDocument || !canvasRef.current) {
       setPageSize({ width: 0, height: 0 });
-      setIsRendering(false);
+      // setIsRendering(false);
       setRenderError(null);
       return;
     }
@@ -96,7 +96,7 @@ const EditCanvas: React.FC = () => {
         renderTaskRef.current = null;
       }
 
-      setIsRendering(true);
+      // setIsRendering(true);
       setRenderError(null);
       setPageSize({ width: 0, height: 0 });
 
@@ -106,7 +106,7 @@ const EditCanvas: React.FC = () => {
           const errorMsg = `無効なページ番号: ${currentPage} (総ページ数: ${pdfDocument.numPages})`;
           console.warn(errorMsg);
           setRenderError(errorMsg);
-          setIsRendering(false);
+          // setIsRendering(false);
           return;
         }
 
@@ -144,19 +144,19 @@ const EditCanvas: React.FC = () => {
         await renderTask.promise;
         if (renderSeq !== renderSeqRef.current) return;
         renderTaskRef.current = null;
-        setIsRendering(false);
+        // setIsRendering(false);
         setRenderError(null);
       } catch (error) {
         // キャンセルエラーは無視
         if (error && typeof error === 'object' && 'name' in error && error.name === 'RenderingCancelledException') {
-          setIsRendering(false);
+          // setIsRendering(false);
           return;
         }
         
         const errorMessage = error instanceof Error ? error.message : String(error);
         console.error('ページのレンダリングに失敗:', error);
         setRenderError(`レンダリングエラー: ${errorMessage}`);
-        setIsRendering(false);
+        // setIsRendering(false);
         setPageSize({ width: 0, height: 0 });
       }
     };
