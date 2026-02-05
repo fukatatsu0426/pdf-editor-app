@@ -21,7 +21,6 @@
         "arch": ["x64"]
       }
     ],
-    "icon": "build/icon.ico",
     "artifactName": "${productName}-${version}-Setup.${ext}"
   },
   "nsis": {
@@ -30,9 +29,6 @@
     "createDesktopShortcut": true,
     "createStartMenuShortcut": true,
     "shortcutName": "PDF編集ツール",
-    "installerIcon": "build/icon.ico",
-    "uninstallerIcon": "build/icon.ico",
-    "installerHeaderIcon": "build/icon.ico",
     "installerLanguages": ["ja_JP"],
     "license": "LICENSE.txt"
   },
