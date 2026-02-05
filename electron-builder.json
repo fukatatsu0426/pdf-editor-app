@@ -5,6 +5,7 @@
     "output": "release",
     "buildResources": "build"
   },
+  "npmRebuild": false,
   "files": [
     "dist/**/*",
     "node_modules/**/*",
