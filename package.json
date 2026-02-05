@@ -1,11 +1,10 @@
 {
   "name": "pdf-editor-app",
   "version": "1.0.0",
-  "type": "module",
   "description": "Windows 11 PDF編集アプリケーション",
   "main": "dist/electron/main.js",
   "scripts": {
-    "dev": "concurrently \"npm run dev:react\" \"npm run dev:electron\"",
+    "dev": "npm run build:electron && concurrently -n \"VITE,ELECTRON\" -c \"cyan,magenta\" \"npm run dev:react\" \"npm run dev:electron\"",
     "dev:react": "vite",
     "dev:electron": "wait-on http://localhost:5173 && cross-env NODE_ENV=development electron .",
     "build": "tsc && vite build",

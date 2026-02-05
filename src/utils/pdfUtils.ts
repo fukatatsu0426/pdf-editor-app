@@ -1,8 +1,16 @@
 import * as pdfjsLib from 'pdfjs-dist';
+import pdfjsWorkerUrl from 'pdfjs-dist/build/pdf.worker.min.js?url';
 
 // PDF.jsのワーカーを設定
-// これによりPDF処理がバックグラウンドで実行され、UIがフリーズしなくなります
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+// CDN依存を避けてローカルバンドルを使用（Electron/オフライン環境でも安定動作）
+try {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorkerUrl;
+  console.log('PDF.js worker configured:', pdfjsWorkerUrl);
+} catch (error) {
+  console.error('Failed to configure PDF.js worker:', error);
+  // フォールバック: CDNを使用
+  pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+}
 
 export { pdfjsLib };
 

@@ -7,6 +7,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // ファイル操作
   openFileDialog: () => ipcRenderer.invoke('open-file-dialog'),
   openMultipleFilesDialog: () => ipcRenderer.invoke('open-multiple-files-dialog'),
+  openImageDialog: () => ipcRenderer.invoke('open-image-dialog'),
   readFile: (filePath: string) => ipcRenderer.invoke('read-file', filePath),
   saveFileDialog: (defaultName?: string) => ipcRenderer.invoke('save-file-dialog', defaultName),
   writeFile: (filePath: string, data: Uint8Array) => ipcRenderer.invoke('write-file', filePath, data),
@@ -20,6 +21,7 @@ declare global {
       platform: string;
       openFileDialog: () => Promise<string | null>;
       openMultipleFilesDialog: () => Promise<string[]>;
+      openImageDialog: () => Promise<string | null>;
       readFile: (filePath: string) => Promise<ArrayBuffer>;
       saveFileDialog: (defaultName?: string) => Promise<string | null>;
       writeFile: (filePath: string, data: Uint8Array) => Promise<{ success: boolean }>;

@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { PDFProvider } from './contexts/PDFContext'
+import { EditProvider } from './contexts/EditContext'
 import PDFViewer from './components/PDFViewer/PDFViewer'
 import Toolbar from './components/PDFViewer/Toolbar'
 import FileMerger from './components/FileOperations/FileMerger'
 import FileSplitter from './components/FileOperations/FileSplitter'
+import PDFEditor from './components/PDFEditor/PDFEditor'
 
-type TabType = 'viewer' | 'merge' | 'split';
+type TabType = 'viewer' | 'merge' | 'split' | 'edit';
 
 function App() {
   const [activeTab, setActiveTab] = useState<TabType>('viewer');
@@ -45,6 +47,16 @@ function App() {
           >
             PDF分割
           </button>
+          <button
+            onClick={() => setActiveTab('edit')}
+            className={`px-6 py-3 font-medium transition-colors ${
+              activeTab === 'edit'
+                ? 'bg-gray-900 border-b-2 border-blue-500'
+                : 'hover:bg-gray-700'
+            }`}
+          >
+            編集
+          </button>
         </div>
 
         {/* コンテンツエリア */}
@@ -63,11 +75,18 @@ function App() {
           <div className="flex-1 overflow-hidden">
             <FileMerger />
           </div>
-        ) : (
+        ) : activeTab === 'split' ? (
           /* PDF分割 */
           <div className="flex-1 overflow-hidden">
             <FileSplitter />
           </div>
+        ) : (
+          /* 編集 */
+          <EditProvider>
+            <div className="flex-1 overflow-hidden">
+              <PDFEditor />
+            </div>
+          </EditProvider>
         )}
       </div>
     </PDFProvider>

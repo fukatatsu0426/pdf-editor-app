@@ -39,6 +39,23 @@ export function registerFileHandlers() {
     return result.filePaths;
   });
 
+  // 画像ファイルを開く（編集機能用）
+  ipcMain.handle('open-image-dialog', async () => {
+    const result = await dialog.showOpenDialog({
+      properties: ['openFile'],
+      filters: [
+        { name: 'Image Files', extensions: ['png', 'jpg', 'jpeg'] },
+      ],
+      title: '画像ファイルを選択'
+    });
+
+    if (result.canceled || result.filePaths.length === 0) {
+      return null;
+    }
+
+    return result.filePaths[0];
+  });
+
   // ファイルを読み込む
   ipcMain.handle('read-file', async (_event, filePath: string) => {
     try {

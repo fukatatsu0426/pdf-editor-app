@@ -4,6 +4,7 @@ interface ElectronAPI {
   platform: string;
   openFileDialog: () => Promise<string | null>;
   openMultipleFilesDialog: () => Promise<string[] | null>;
+  openImageDialog: () => Promise<string | null>;
   saveFileDialog: (defaultFileName: string) => Promise<string | null>;
   selectFolderDialog: () => Promise<string | null>;
   readFile: (filePath: string) => Promise<ArrayBuffer>;

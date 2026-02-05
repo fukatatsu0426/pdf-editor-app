@@ -15,6 +15,12 @@ export default function Toolbar() {
 
   const handleOpenFile = async () => {
     try {
+      // Electron APIが利用可能かチェック
+      if (!window.electronAPI || !window.electronAPI.openFileDialog) {
+        alert('この機能はElectronアプリとして起動する必要があります。\nターミナルで「npm run dev」を実行してください。');
+        return;
+      }
+
       const filePath = await window.electronAPI.openFileDialog();
       if (!filePath) return;
 
@@ -22,7 +28,7 @@ export default function Toolbar() {
       await loadDocument(arrayBuffer, filePath);
     } catch (error) {
       console.error('ファイルを開くエラー:', error);
-      alert('PDFファイルを開けませんでした');
+      alert('PDFファイルを開けませんでした: ' + (error instanceof Error ? error.message : String(error)));
     }
   };
 
