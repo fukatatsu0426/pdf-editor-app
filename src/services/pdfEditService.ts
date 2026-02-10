@@ -74,6 +74,28 @@ export async function reorderPages(
 }
 
 // テキストを追加
+async function loadJapaneseFont(pdfDoc: PDFDocument): Promise<any> {
+  pdfDoc.registerFontkit(fontkit);
+  const fontPaths = [
+    'C:\\\\Windows\\\\Fonts\\\\meiryo.ttc',
+    'C:\\\\Windows\\\\Fonts\\\\YuGothR.ttc',
+    'C:\\\\Windows\\\\Fonts\\\\YuGothM.ttc',
+    'C:\\\\Windows\\\\Fonts\\\\msgothic.ttc',
+    'C:\\\\Windows\\\\Fonts\\\\msmincho.ttc',
+  ];
+
+  for (const fontPath of fontPaths) {
+    try {
+      const fontBuffer = await window.electronAPI.readFile(fontPath);
+      return await pdfDoc.embedFont(fontBuffer, { subset: true });
+    } catch {
+      // try next font
+    }
+  }
+
+  return await pdfDoc.embedFont(StandardFonts.Helvetica);
+}
+
 export async function addText(
   pdfDoc: PDFDocument,
   pageIndex: number,
@@ -87,23 +109,12 @@ export async function addText(
   const page = pages[pageIndex];
   const { height } = page.getSize();
 
-  // 日本語フォントを埋め込む場合はfontkitを登録
-  pdfDoc.registerFontkit(fontkit);
-
   // 日本語が含まれているか確認
   const hasJapanese = /[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\u4e00-\u9faf]/.test(textEdit.text);
 
   let font;
   if (hasJapanese) {
-    // Windowsのメイリオフォントを読み込む
-    try {
-      const fontPath = 'C:\\Windows\\Fonts\\meiryo.ttc';
-      const fontBuffer = await window.electronAPI.readFile(fontPath);
-      font = await pdfDoc.embedFont(fontBuffer, { subset: true });
-    } catch {
-      // フォールバック: 標準フォント（日本語は表示されない）
-      font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-    }
+    font = await loadJapaneseFont(pdfDoc);
   } else {
     font = await pdfDoc.embedFont(StandardFonts.Helvetica);
   }
@@ -256,22 +267,9 @@ export async function addComment(
   const page = pages[pageIndex];
   const { height } = page.getSize();
 
-  pdfDoc.registerFontkit(fontkit);
-
-  let font;
   const hasJapanese = /[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\u4e00-\u9faf]/.test(comment.text);
 
-  if (hasJapanese) {
-    try {
-      const fontPath = 'C:\\Windows\\Fonts\\meiryo.ttc';
-      const fontBuffer = await window.electronAPI.readFile(fontPath);
-      font = await pdfDoc.embedFont(fontBuffer, { subset: true });
-    } catch {
-      font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-    }
-  } else {
-    font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-  }
+  const font = hasJapanese ? await loadJapaneseFont(pdfDoc) : await pdfDoc.embedFont(StandardFonts.Helvetica);
 
   const pdfY = height - comment.y;
 
